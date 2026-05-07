@@ -1,0 +1,36 @@
+﻿<Application x:Class="WpfForrat.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WpfForrat"
+                  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:conv="clr-namespace:WpfForrat.Converters"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            
+            <conv:RoleVisibilityConverter x:Key="RoleVisibilityConverter"/>
+            <conv:TextDecorationConverter x:Key="TextDecorationConverter"/>
+            <conv:SkladConverte x:Key="skladConverter"/>
+            <conv:SkidkaConverter x:Key="skidkaConverter"/>
+            <conv:PriceConverter x:Key="priceConverter"/>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign2.Defaults.xaml" />
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="MaterialDesign.Brush.Primary" Color="#00FA9A"/>
+                    <SolidColorBrush x:Key="MaterialDesign.Brush.Secondary" Color="#7FFF00"/>
+                    <SolidColorBrush x:Key="MaterialDesign.Brush.Primary.Foreground" Color="#FFFFFF"/>
+                    <SolidColorBrush x:Key="MaterialDesign.Brush.Secondary.Foreground" Color="#FFFFFF"/>
+                    <SolidColorBrush x:Key="RedBrush" Color="Red"/>
+                    <SolidColorBrush x:Key="BlueBrush" Color="LightBlue"/>
+                    <SolidColorBrush x:Key="GreenBrush" Color="#2E8B57"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontFamily" Value=". "/>
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

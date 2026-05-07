@@ -1,0 +1,126 @@
+﻿<Page x:Class="WpfForrat.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfForrat.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="800"
+      Title="Страница товаров"
+      Background="White">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="400"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+           
+                <Image Grid.Column="0" Source="/Images/Icon.png" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Column="1"
+    HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+    Text="{Binding CurrentUser.Fio}" Margin="10 0 0 0"/>
+            
+        </Grid>
+               
+           
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0" Visibility="{Binding CurrentUser.IdRole, Converter={StaticResource RoleVisibilityConverter}, ConverterParameter='2_1'}">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Поиск" HorizontalAlignment="Center"/>
+                    <TextBox  Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Height="40" Width="160" Margin="10 0 0 0"  TextChanged="TextBox_TextChanged" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Фильтрация" HorizontalAlignment="Center"/>
+                <ComboBox  Height="40" Width="160" Margin="10 0 0 0" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding GroupNameList}" DisplayMemberPath="Name"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Сортировка" HorizontalAlignment="Center"/>
+                <ComboBox Height="40" Width="160" Margin="10 0 0 0" SelectionChanged="ComboBox_SelectionChanged_1">
+                    <ComboBoxItem  Content="По убыванию" Tag="Desc"/>
+                    <ComboBoxItem Content="По возрастанию" Tag="Asc"/>
+                </ComboBox>
+            </StackPanel>
+            <Button Content="Заказы" Click="ZakaziClick"  Margin="10 0 0 0"  />
+
+        </StackPanel>
+        <StackPanel Grid.Row="2"  Orientation="Horizontal" Visibility="{Binding CurrentUser.IdRole, Converter={StaticResource RoleVisibilityConverter}, ConverterParameter='1_'}" >
+            <Button Content="Добавить " Click="AddClick"  Margin="10 0 0 0"/>
+            <Button Content="Удалить" Click="DeleteCLick"  Margin="10 0 0 0"/>
+           
+        </StackPanel>
+        <ListView ItemsSource="{Binding Tovars}" x:Name="TovarListView" Grid.Row="3"  MouseDoubleClick="ListView_MouseDoubleClick">
+            
+                    <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1 " BorderBrush="Gray">
+                        <Grid Width=" 700">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="350"/>
+                                <ColumnDefinition Width="200"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding Fhoto}" Grid.Column="0"/>
+                                <StackPanel Grid.Column="1">
+
+                                <TextBlock FontSize="18" FontWeight="Bold">
+                                        <Run Text="{Binding IdCategoryNavigation.Category}"/>
+                                         <Run Text=" | "/>
+                                         <Run Text="{Binding NameTovar}"/>
+                                </TextBlock>
+                                <TextBlock>
+                                     <Run Text="Описание товара: "/>
+                                     <Run Text="{Binding Opisanie}" />
+                                </TextBlock>
+
+                                <TextBlock>
+                                        <Run Text="Производитель: "/>
+                                        <Run Text="{Binding IdProizvodNavigation.Name}"/>
+
+
+                                </TextBlock>
+
+                                <TextBlock>
+                                        <Run Text="Поставщик: "/>
+                                        <Run Text="{Binding IdPostNavigation.Name}"/>
+
+
+                                </TextBlock>
+                                <TextBlock>
+                                        <Run Text="Цена: "/>
+                                        <Run Text="{Binding Money, StringFormat={}{0:F2}}" TextDecorations="{Binding Money, Converter={StaticResource TextDecorationConverter}}" Foreground="{Binding Money, Converter={StaticResource priceConverter}}"/>
+                                        <Run Text="{Binding PriceWithDiscount, StringFormat={}{0:F2}}"/>
+                                </TextBlock>
+                              
+                                <TextBlock>
+                                     <Run Text="Единицы измерения: "/>
+                                     <Run Text="{Binding IdEdIzmNavigation.EdIzm1}"/>
+                                </TextBlock>
+
+                                <TextBlock  Background="{Binding KolSklad, Converter={StaticResource skladConverter}}">
+                                        <Run Text="Количество: "/>
+                                        <Run Text="{Binding KolSklad}"/>
+                                </TextBlock>
+                            </StackPanel>
+                            
+                             <StackPanel Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{Binding Sale, Converter={StaticResource skidkaConverter}}">
+                                <TextBlock Text="Действующая скидка" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Sale}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                              
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+                </ListView.ItemTemplate>
+        </ListView>
+        <Button Grid.Row="4" Content="Назад" Click="BackClick"  Margin="10 0 0 0" Width="100" HorizontalAlignment="Left"
+                />
+    </Grid>
+</Page>
